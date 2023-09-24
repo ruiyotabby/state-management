@@ -1,7 +1,7 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { getAll } from './requests'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { createAnecdote, getAll } from './requests'
 
 const App = () => {
   const handleVote = (anecdote) => {
@@ -12,7 +12,6 @@ const App = () => {
     queryKey: ['anecdotes'],
     queryFn: getAll
   })
-  console.log(JSON.parse(JSON.stringify(result)));
 
   if (result.isLoading) {
     return <div>Loading data...</div>
