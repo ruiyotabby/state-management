@@ -10,6 +10,9 @@ const AnecdoteForm = () => {
     onSuccess: (newAnecdote) => {
       const anecdotes = queryClient.getQueryData(['anecdotes']);
       queryClient.setQueryData(['anecdotes'], anecdotes.concat(newAnecdote));
+    },
+    onError : (error) => {
+      dispatch({ type: 'ERROR', text: error })
     }
   })
 
@@ -17,18 +20,18 @@ const AnecdoteForm = () => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    if (content.length <= 5) return console.log('Failed, min length is 5');
+    setTimeout(() => dispatch({ type: 'RESET' }), 5000)
+    if (content.length <= 5)
+      return dispatch({ type: 'ERROR', text: 'Too short, min length is 5'});
     newAnecdoteMutation.mutate({ content, votes: 0 })
     dispatch({ type: 'CREATE', text: content })
-    setTimeout(() => dispatch({ type: 'RESET' }), 5000)
-
 }
 
   return (
     <div>
       <h3>create new</h3>
       <form onSubmit={onCreate}>
-        <input name='anecdote' minLength='5' />
+        <input name='anecdote'  />
         <button type="submit">create</button>
       </form>
     </div>

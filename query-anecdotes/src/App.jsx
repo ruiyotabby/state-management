@@ -30,6 +30,7 @@ const App = () => {
   if (result.isLoading) {
     return <div>Loading data...</div>
   }
+
   if (result.isError && result.error.message === 'Network Error') {
     return <div>Anecdotes service not available due to problems in the server</div>
   }
